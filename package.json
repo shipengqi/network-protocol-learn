@@ -1,0 +1,31 @@
+{
+  "name": "network-protocol-learn",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "hexo s -p 8085"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipengqi/network-protocol-learn.git"
+  },
+  "hexo": {
+    "version": "3.9.0"
+  },
+  "author": "shipengqi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shipengqi/network-protocol-learn/issues"
+  },
+  "homepage": "https://github.com/shipengqi/network-protocol-learn#readme",
+  "dependencies": {
+    "hexo": "^3.3.8",
+    "hexo-cli": "^1.0.3",
+    "hexo-deployer-git": "^1.0.0",
+    "hexo-renderer-ejs": "^0.2.0",
+    "hexo-renderer-less": "^0.2.0",
+    "hexo-renderer-marked": "^0.2.10",
+    "hexo-renderer-sass": "^0.3.2",
+    "hexo-server": "^0.2.1",
+    "hexo-theme-doc": "^0.1.0"
+  }
+}
