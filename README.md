@@ -8,7 +8,7 @@
 # install dependencies
 yarn
 
-# start dev server, access http://localhost:8085/network-protocol-learn
+# start dev server, access http://localhost:8086/network-protocol-learn
 yarn start
 
 # deploy
