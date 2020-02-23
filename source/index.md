@@ -22,7 +22,7 @@ title: 网络协议
 
 程序是如何工作的？
 
-![](imgs/protocol-layers.jpg)
+![](images/tcpip/protocol-flow-example.jpg)
 
 
 **网络上跑的包，都是完整的。可以有下层没上层，绝对不可能有上层没下层**。
