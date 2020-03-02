@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | 网络工具 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"网络工具","path":"net_tools.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="网络工具"><a href="#网络工具" class="headerlink" title="网络工具"></a>网络工具</h1><h2 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h2><p>使用命令是 <code>telnet [domainname or ip] [port]</code> 检查端口是否打开。</p>
+<h2 id="netcat"><a href="#netcat" class="headerlink" title="netcat"></a>netcat</h2><p>netcat 简称 nc。</p>
+<h3 id="用-nc-来当聊天服务器"><a href="#用-nc-来当聊天服务器" class="headerlink" title="用 nc 来当聊天服务器"></a>用 nc 来当聊天服务器</h3><p><code>nc -l</code> 命令可以快速的启动一个 tcp server 监听某个端口。</p>
+<ol>
+<li>在服务器（16.155.194.49）命令行输入 <code>nc -l 9090</code>。</li>
+<li>客户端机器的终端中输入 <code>nc 10.211.55.5 9090</code>。此时两台机器建立了一条 tcp 连接，可以聊天了。</li>
+</ol>
+<h3 id="查看远程端口是否打开"><a href="#查看远程端口是否打开" class="headerlink" title="查看远程端口是否打开"></a>查看远程端口是否打开</h3><p>使用命令 <code>nc -zv [host or ip] [port]</code>。</p>
+<ul>
+<li><code>-z</code> 表示不发送任何数据包，tcp 三次握手完后自动退出进程。</li>
+<li><code>-v</code> 参数则会输出更多详细信息（verbose）。</li>
+</ul>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><h3 id="列出套接字"><a href="#列出套接字" class="headerlink" title="列出套接字"></a>列出套接字</h3><ul>
+<li><code>netstat -a</code> 输出所有的套接字，包括监听的和未监听的套接字。</li>
+<li><code>netstat -at</code> 只列出 TCP 套接字。也可也用 <code>--tcp</code>。</li>
+<li><code>netstat -au</code> 只列出 UDP 套接字。也可也用 <code>--udp</code>。</li>
+<li><code>netstat -l</code> 列出处于 LISTEN 状态的连接，也可也用 <code>--listening</code>。</li>
+<li><code>netstat -ltn</code> 常用端口都被映射为了名字，比如 22 端口输出显示为 ssh，8080 端口被映射为 webcache。大部分情况下，我们并<br>不想 netstat 帮我们做这样的事情，可以加上 <code>-n</code> 禁用。</li>
+<li><code>netstat -ltnp</code> <code>-p</code>可以显示连接归属的进程信息。</li>
+<li><code>netstat -i</code> 可以列出网卡信息。</li>
+</ul>
+<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p>Linux 发行包都预装了 tcpdump，如果没有预装，可以用 <code>yum install -y tcpdump</code> 来进行安装。</p>
+<p><code>tcpdump -i any</code> 显示经过网卡的数据包，如果只想查看 eth0 网卡经过的数据包，就可以使用 <code>tcpdump -i eth0</code>。</p>
+<ul>
+<li><code>-i</code> 指定一个网卡</li>
+<li><code>any</code> 表示任意。</li>
+</ul>
+<h3 id="过滤主机：host"><a href="#过滤主机：host" class="headerlink" title="过滤主机：host"></a>过滤主机：host</h3><p><code>tcpdump -i any host 10.211.55.2</code> 表示只查看 ip 为 <code>10.211.55.2</code> 的网络包，这个 ip 可以是源地址也可以是目标地址。</p>
+<h3 id="过滤源地址、目标地址：src、dst"><a href="#过滤源地址、目标地址：src、dst" class="headerlink" title="过滤源地址、目标地址：src、dst"></a>过滤源地址、目标地址：src、dst</h3><p>如果只想抓取主机 <code>10.211.55.10</code> 发出的包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any src 10.211.55.10</span><br></pre></td></tr></table></figure></p>
+<p>如果只想抓取主机 <code>10.211.55.10</code> 收到的包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any dst 10.211.55.1</span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤端口：port"><a href="#过滤端口：port" class="headerlink" title="过滤端口：port"></a>过滤端口：port</h3><p>查看 80 端通信的数据包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any port 80</span><br></pre></td></tr></table></figure></p>
+<p>只抓取 80 端口收到的包，可以加上 dst<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any dst port 80</span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤指定端口范围内的流量"><a href="#过滤指定端口范围内的流量" class="headerlink" title="过滤指定端口范围内的流量"></a>过滤指定端口范围内的流量</h3><p>比如抓取 21 到 23 区间所有端口的流量<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump portrange 21-23</span><br></pre></td></tr></table></figure></p>
+<h3 id="禁用主机与端口解析：-n-与-nn"><a href="#禁用主机与端口解析：-n-与-nn" class="headerlink" title="禁用主机与端口解析：-n 与 -nn"></a>禁用主机与端口解析：-n 与 -nn</h3><p>如果不加 <code>-n</code> 选项，tcpdump 会显示主机名，比如下面的 <code>test.ya.local</code> 和 <code>c2.shared</code>：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">09:04:56.821206 IP test.ya.local.59915 &gt; c2.shared.ssh: Flags [P.], seq 397:433, ack 579276, win 2048, options [nop,nop,TS val 1200089877 ecr 435612355], length 36</span><br></pre></td></tr></table></figure></p>
+<p>加上 <code>-n</code> 选项以后，主机名都被替换成了 ip<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -n</span><br><span class="line">10:02:13.705656 IP 10.211.55.2.59915 &gt; 10.211.55.10.ssh: Flags [P.], seq 829:865, ack 1228756, win 2048, options [nop,nop,TS val 1203228910 ecr 439049239], length 36</span><br></pre></td></tr></table></figure></p>
+<p>但是常用端口还是会被转换成协议名，比如 ssh 协议的 22 端口。如果不想 tcpdump 做转换，可以加上 <code>-nn</code>，这样就不会解析端口了，输出<br>中的 ssh 变为了 22<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -nn</span><br><span class="line">10:07:37.598725 IP 10.211.55.2.59915 &gt; 10.211.55.10.22: Flags [P.], seq 685:721, ack 1006224, win 2048, options [nop,nop,TS val 1203524536 ecr 439373132], length 36</span><br></pre></td></tr></table></figure></p>
+<h3 id="过滤协议"><a href="#过滤协议" class="headerlink" title="过滤协议"></a>过滤协议</h3><p>只查看 udp 协议，可以直接使用下面的命令<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -nn udp</span><br><span class="line"></span><br><span class="line">10:25:31.457517 IP 10.211.55.10.51516 &gt; 10.211.55.1.53: 23956+ A? www.baidu.com. (31)</span><br><span class="line">10:25:31.490843 IP 10.211.55.1.53 &gt; 10.211.55.10.51516: 23956 3/13/9 CNAME www.a.shifen.com., A 14.215.177.38, A 14.215.177.39 (506)</span><br></pre></td></tr></table></figure></p>
+<h3 id="抓取指定个数报文"><a href="#抓取指定个数报文" class="headerlink" title="抓取指定个数报文"></a>抓取指定个数报文</h3><p>使用 <code>-c number</code> 命令可以抓取 number 个报文后退出。在网络包交互非常频繁的服务器上抓包比较有用，可能运维人员<br>只想抓取 1000 个包来分析一些网络问题，就比较有用了。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any -nn port 80  -c 5</span><br></pre></td></tr></table></figure></p>
+<p>上面的命令只抓取 5 个报文。</p>
+<h3 id="数据报文输出到文件"><a href="#数据报文输出到文件" class="headerlink" title="数据报文输出到文件"></a>数据报文输出到文件</h3><p><code>-w</code> 选项用来把数据报文输出到文件，比如下面的命令就是把所有 80 端口的数据输出到文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any port 80 -w test.pcap</span><br></pre></td></tr></table></figure></p>
+<p>生成的 pcap 文件就可以用 wireshark 打开进行更详细的分析了</p>
+<p>也可以加上 <code>-U</code> 强制立即写到本地磁盘，性能稍差。</p>
+<h3 id="显示绝对的序号"><a href="#显示绝对的序号" class="headerlink" title="显示绝对的序号"></a>显示绝对的序号</h3><p>默认情况下，tcpdump 显示的是从 0 开始的相对序号。如果想查看真正的绝对序号，可以用 <code>-S</code> 选项。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 没有 -S 时的输出，可以看到 seq 是从 0 开始</span></span><br><span class="line">tcpdump -i any port 80 -nn</span><br><span class="line"></span><br><span class="line">12:12:37.832165 IP 10.211.55.10.46102 &gt; 36.158.217.230.80: Flags [P.], seq 1:151, ack 1, win 229, length 150</span><br><span class="line">12:12:37.832272 IP 36.158.217.230.80 &gt; 10.211.55.10.46102: Flags [.], ack 151, win 16384, length 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 有 -S 时的输出, seq 不是从 0 开始</span></span><br><span class="line">tcpdump -i any port 80 -nn -S </span><br><span class="line"></span><br><span class="line">12:13:21.863918 IP 10.211.55.10.46074 &gt; 36.158.217.223.80: Flags [P.], seq 4277123624:4277123774, ack 3358116659, win 229, length 150</span><br><span class="line">12:13:21.864091 IP 36.158.217.223.80 &gt; 10.211.55.10.46074: Flags [.], ack 4277123774, win 16384, length 0</span><br></pre></td></tr></table></figure></p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p>tcpdump 可以用运算符 <code>and</code>（或 <code>&amp;&amp;</code>）、<code>or</code>（或 <code>||</code>）、<code>not</code>（或 <code>!</code>）来组合出任意复杂的过滤器</p>
+<p>抓取 ip 为 <code>10.211.55.10</code> 到端口 3306 的数据包<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any host 10.211.55.10 and dst port 3306</span><br></pre></td></tr></table></figure></p>
+<p>抓取源 ip 为 <code>10.211.55.10</code>，目标端口除了 22 以外所有的流量<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i any src 10.211.55.10 and not dst port 22</span><br></pre></td></tr></table></figure></p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

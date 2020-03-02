@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | 移动网络 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"移动网络","path":"nemo.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="移动网络"><a href="#移动网络" class="headerlink" title="移动网络"></a>移动网络</h1><p>手机上网有 2G、3G、4G 的说法，究竟这都是什么意思呢？有一个通俗的说法就是：用 2G 看文字，用 3G 看图片，用 4G 看视频。</p>
+<h2 id="2G网络"><a href="#2G网络" class="headerlink" title="2G网络"></a>2G网络</h2><p>在 2G 时代，上网使用的不是 IP 网络，而是电话网络，走模拟信号，专业名称为<strong>公共交换电话网</strong>（PSTN，Public Switched TelephoneNetwork）。</p>
+<p>那手机不连网线，也不连电话线，它是怎么上网？</p>
+<p>手机是通过收发无线信号来通信的，专业名称是 Mobile Station，简称 MS，需要嵌入 SIM。手机是客户端，而无线信号的服务端，就是基站子<br>系统（BSS，Base Station Subsystem）。</p>
+<p><strong>无论无线通信如何无线，最终还是要连接到有线的网络里</strong>。</p>
+<p>基站子系统分两部分，一部分对外提供无线通信，叫作<strong>基站收发信台</strong>（BTS，Base Transceiver Station），另一部分对内连接有线网络，叫<br>作<strong>基站控制器</strong>（BSC，Base StationController）。基站收发信台通过无线收到数据后，转发给基站控制器。</p>
+<p>属于无线的部分，统称为<strong>无线接入网</strong>（RAN，Radio Access Network）。</p>
+<p>基站控制器通过有线网络，连接到提供手机业务的运营商的数据中心，这部分称为<strong>核心网</strong>（CN，Core Network）。<strong>核心网还没有真的进入互联网，<br>这部分还是主要提供手机业务，是手机业务的有线部分</strong>。</p>
+<p>首先接待基站来的数据的是<strong>移动业务交换中心</strong>（MSC，Mobile Service Switching Center），它是进入核心网的入口，但是它不会让你直接连<br>接到互联网上。</p>
+<p>因为在让你的手机真正进入互联网之前，提供手机业务的运营商，需要认证是不是合法的手机接入。别你自己造了一张手机卡，就连接上来。<br><strong>鉴权中心</strong>（AUC，Authentication Center）和<strong>设备识别寄存器</strong>（EIR，Equipment Identity Register）主要是负责安全性的。</p>
+<p>另外，需要看你是本地的号，还是外地的号，这个牵扯到计费的问题，异地收费还是很贵的。<strong>访问位置寄存器</strong>（VLR，Visit Location Register）<br>是看你目前在的地方，<strong>归属位置寄存器</strong>（HLR，Home Location Register）是看你的号码归属地。</p>
+<p>当你的手机卡既合法又有钱的时候，才允许你上网，这个时候需要一个网关，连接核心网和真正的互联网。<br><strong>网关移动交换中心</strong>（GMSC ，Gateway Mobile Switching Center）就是干这个的，然后是真正的互连网。在 2G 时代，还是电话网络 PSTN。</p>
+<p>数据中心里面的这些模块统称为<strong>网络子系统</strong>（NSS，Network and Switching Subsystem）。</p>
+<p><img src="images/nemo/2g.jpg" alt></p>
+<ul>
+<li><strong>手机通过无线信号连接基站</strong>；</li>
+<li><strong>基站一面朝前接无线，一面朝后接核心网</strong>；</li>
+<li><strong>核心网一面朝前接到基站请求，一是判断你是否合法，二是判断你是不是本地号，还有没有钱，一面通过网关连接电话网络</strong>。</li>
+</ul>
+<h2 id="2-5G网络"><a href="#2-5G网络" class="headerlink" title="2.5G网络"></a>2.5G网络</h2><p>在原来电路交换的基础上，加入了分组交换业务，支持 Packet 的转发，从而支持 IP 网络。多了一个<strong>分组控制单元</strong>（PCU，Packet Control Unit），<br>用以提供分组交换通道。</p>
+<p>在核心网里面，有个朝前的接待员（SGSN，Service GPRS Supported Node）和朝后连接 IP 网络的网关型 GPRS 支持节<br>点（GGSN，Gateway GPRS Supported Node）。</p>
+<p><img src="images/nemo/2p5g.jpg" alt></p>
+<h2 id="3G网络"><a href="#3G网络" class="headerlink" title="3G网络"></a>3G网络</h2><p>线通信技术有了改进，大大增加了无线的带宽。</p>
+<p>以 W-CDMA 为例，理论最高 2M 的下行速度，因而基站改变了，一面朝外的是 Node B，一面朝内连接核心网的是<strong>无线网络控制器</strong><br>（RNC，Radio Network Controller）。核心网以及连接的 IP 网络没有什么变化。</p>
+<p><img src="images/nemo/3g.jpg" alt></p>
+<h2 id="4G网络"><a href="#4G网络" class="headerlink" title="4G网络"></a>4G网络</h2><p>基站为 eNodeB，包含了原来 Node B 和 RNC 的功能，下行速度向百兆级别迈进。另外，核心网实现了控制面和数据面的分离：</p>
+<p>在前面的核心网里面，有接待员 MSC 或者 SGSN，你会发现检查是否合法是它负责，转发数据也是它负责，也即控制面和数据面是合二为一的，这样<br>灵活性比较差，因为控制面主要是指令，多是小包，往往需要高的及时性；数据面主要是流量，多是大包，往往需要吞吐量。</p>
+<p><img src="images/nemo/4g.jpg" alt></p>
+<p>HSS 用于存储用户签约信息的数据库，其实就是你这个号码归属地是哪里的，以及一些认证信息。</p>
+<p>MME 是核心控制网元，是控制面的核心，当手机通过 eNodeB 连上的时候，MME 会根据 HSS 的信息，判断你是否合法。如果允许连上来，MME 不<br>负责具体的数据的流量，而是 MME 会选择数据面的 SGW 和 PGW，然后告诉 eNodeB，我允许你连上来了，你连接它们吧。</p>
+<p>于是手机直接通过 eNodeB 连接 SGW，连上核心网，SGW 相当于数据面的接待员，并通过 PGW 连到 IP 网络。PGW 就是出口网关。在出口网关，有<br>一个组件 PCRF，称为<strong>策略和计费控制单元</strong>，用来控制上网策略和流量的计费。</p>
+<h2 id="手机上网流程"><a href="#手机上网流程" class="headerlink" title="手机上网流程"></a>手机上网流程</h2><p>手机开机之后上网的流程，这个过程称为<strong>Attach</strong>。可以看出来，移动网络还是很复杂的。因为这个过程要建立很多的隧道，分配很多的隧道 ID:</p>
+<p><img src="images/nemo/phonenet.jpg" alt></p>
+<ol>
+<li>手机开机以后，在附近寻找基站 eNodeB，找到后给 eNodeB 发送 Attach Request，说“我来啦，我要上网”。</li>
+<li>eNodeB 将请求发给 MME，说“有个手机要上网”。</li>
+<li>MME 去请求手机，一是认证，二是鉴权，还会请求 HSS 看看有没有钱，看看是在哪里上网。</li>
+<li>当 MME 通过了手机的认证之后，开始分配隧道，先告诉 SGW，说要创建一个会话（Create Session）。在这里面，会给 SGW 分配一个隧<br>道 ID t1，并且请求 SGW 给自己也分配一个隧道 ID。</li>
+<li>SGW 转头向 PGW 请求建立一个会话，为 PGW 的控制面分配一个隧道 ID t2，也给 PGW 的数据面分配一个隧道 ID t3，并且请求 PGW 给自己<br>的控制面和数据面分配隧道 ID。</li>
+<li>PGW 回复 SGW 说“创建会话成功”，使用自己的控制面隧道 ID t2，回复里面携带着给 SGW 控制面分配的隧道 ID t4和控制面的隧道 ID t5，<br>至此 SGW 和 PGW 直接的隧道建设完成。双方请求对方，都要带着对方给自己分配的隧道 ID，从而标志是这个手机的请求。</li>
+<li>接下来 SGW 回复 MME 说“创建会话成功”，使用自己的隧道 ID t1 访问 MME，回复里面有给 MME 分配隧道 ID t6，也有 SGW 给 eNodeB 分配<br>的隧道 ID t7。</li>
+<li>当 MME 发现后面的隧道都建设成功之后，就告诉 eNodeB，“后面的隧道已经建设完毕，SGW给你分配的隧道 ID 是 t7，你可以开始连上来了，但<br>是你也要给 SGW 分配一个隧道 ID”。</li>
+<li>eNodeB 告诉 MME 自己给 SGW 分配一个隧道，ID 为 t8。</li>
+<li>MME 将 eNodeB 给 SGW 分配的隧道 ID t8 告知 SGW，从而前面的隧道也建设完毕。</li>
+</ol>
+<h3 id="异地上网问题"><a href="#异地上网问题" class="headerlink" title="异地上网问题"></a>异地上网问题</h3><p>为什么要分 SGW 和 PGW，一个 GW 不可以吗？SGW 是你本地的运营商的设备，而 PGW 是你所属的运营商的设备。</p>
+<p>如果你在巴塞罗那，一下飞机，手机开机，周围搜寻到的肯定是巴塞罗那的 eNodeB。通过 MME 去查寻国内运营商的 HSS，看你是否合法，是否还<br>有钱。如果允许上网，你的手机和巴塞罗那的 SGW 会建立一个隧道，然后巴塞罗那的 SGW 和国内运营商的 PGW 建立一个隧道，然后通过国内<br>运营商的 PGW 上网。</p>
+<p><img src="images/nemo/phonenet2.jpg" alt></p>
+<p>这样判断你是否能上网的在国内运营商的 HSS，控制你上网策略的是国内运营商的 PCRF，给手机分配的 IP 地址也是国内运营商的 PGW 负责的，给<br>手机分配的 IP 地址也是国内运营商里统计的。运营商由于是在 PGW 里面统计的，这样你的上网流量全部通过国内运营商即可，只不过巴塞罗那运营商<br>也要和国内运营商进行流量结算。由于你的上网策略是由国内运营商在 PCRF 中控制的，因而你还是上不了脸书。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

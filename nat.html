@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | NAT </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"NAT","path":"nat.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h1><p>NAT （Net Address Translation），它是负责网络地址转换的一个协议。它负责把私网内的的 IP 和端口转换成公网的 IP 和端口，也即使我们通<br>常所说的 IP 地址映射。NAT 负责 IP 地址映射，防火墙负责数据包的过滤，但是现今 NAT 有了包过滤功能。<br>优点：</p>
+<ul>
+<li>所有内部 IP 对外部来说都是隐蔽的。所以，外部不可以通过指定 IP 地址的方式直接对网络内的任何一台特定的计算机发起攻击。</li>
+<li>如果公共 IP 地址资源短缺，NAT 可以使整个内部网络共享一个 IP 地址。</li>
+<li>可以启用基本的包过滤防火墙安全机制，因为所有传入的包如果没有专门指定配置到 NAT，那么就会被丢弃。内部网络的计算机就不可能直接访问外部网络。</li>
+</ul>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

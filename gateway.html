@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | 网关 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"网关","path":"gateway.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h1><p>大学宿舍里，如果校园网开通了，如何在宿舍上网？<br>路由器，路由器会有内网网口和外网网口。把外网网口的线插到校园网的网口上，将这个外网网口配置成和网管部的一样。内网网口连上你们宿舍的所<br>有的电脑。这个路由器就是<strong>网关</strong>。</p>
+<h2 id="MAC-头和-IP-头的细节"><a href="#MAC-头和-IP-头的细节" class="headerlink" title="MAC 头和 IP 头的细节"></a>MAC 头和 IP 头的细节</h2><p>一旦配置了 IP 地址和网关，往往就能够指定目标地址进行访问了。由于在跨网关访问的时候，牵扯到 MAC 地址和IP 地址的变化，所以有必要了解<br>MAC 头和 IP 头的细节。</p>
+<p><img src="images/gateway/ip-header.jpg" alt></p>
+<p>MAC 头里面<strong>协议类型</strong>，用来说明里面是 IP 协议。</p>
+<p>IP 头：</p>
+<ul>
+<li>版本号，目前主流的还是 IPv4</li>
+<li>服务类型 TOS，代表了当前的包是高优先级的，还是低优先级的。</li>
+<li>TTL，生存时间字段设置了数据报可以经过的最多路由器数。它指定了数据报的生存时间。TTL 的初始值由源主机设置（通常为 64），一旦经过一个<br>处理它的路由器，它的值就减去 1。当该字段的值为 0 时，数据报就被丢弃，并发送 ICMP 报文（差错报文类型）通知源主机。</li>
+<li>8 位的标识协议，这里到了下一层的协议，也就是，是 TCP 还是 UDP。</li>
+<li>源 IP 和目标 IP 是最重要的。</li>
+</ul>
+<p>在任何一台机器上，当要访问另一个 IP 地址的时候，都会使用 CIDR 和子网掩码先判断是否在同一个网段。</p>
+<ul>
+<li>如果是同一个网段，例如，你访问你旁边的兄弟的电脑，那就没网关什么事情，直接将源地址和目标地址放入 IP 头中，然后通过 ARP 获得 MAC 地址，<br>将源 MAC 和目的 MAC 放入MAC 头中，发出去就可以了。</li>
+<li>如果不是同一网段，例如，你要访问你们校园网里面的 BBS，该怎么办？这就需要发往默认网关 Gateway。Gateway 的地址一定是和源 IP 地址<br>是一个网段的。往往不是第一个，就是第二个。例如 <code>192.168.1.0/24</code> 这个网段，Gateway 往往会是 <code>192.168.1.1/24</code> 或<br>者 <code>192.168.1.2/24</code>。</li>
+</ul>
+<p>如何发往默认网关呢？网关不是和源 IP 地址是一个网段的么？这个过程就和发往同一个网段的其他机器是一样的：将源地址和目标 IP 地址放入 IP 头<br>中，通过 ARP 获得网关的 MAC 地址，将源 MAC 和网关的 MAC 放入MAC 头中，发送出去。网关所在的端口，例如 <code>192.168.1.1/24</code> 将网络包收<br>进来，然后接下来怎么做，就完全看网关的了。</p>
+<p><strong>网关往往是一个路由器，是一个三层转发的设备</strong>。啥叫三层设备？前面也说过了，就是把 MAC 头和 IP 头都取下来，然后根据里面的内容，看看接<br>下来把包往哪里转发的设备。</p>
+<h2 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h2><p>静态路由，其实就是在路由器上，配置一条一条规则。这些规则包括：想访问 BBS 站（它肯定有个网段），从 2 号口出去，下一跳是 IP2；想访问<br>教学视频站（它也有个自己的网段），从 3 号口出去，下一跳是 IP3，然后保存在路由器里。</p>
+<h3 id="IP-头和-MAC-头哪些变、哪些不变？"><a href="#IP-头和-MAC-头哪些变、哪些不变？" class="headerlink" title="IP 头和 MAC 头哪些变、哪些不变？"></a>IP 头和 MAC 头哪些变、哪些不变？</h3><p>MAC 地址是一个局域网内才有效的地址。因而，MAC 地址只要过网关，就必定会改变，因为已经换了局域网。两者主要的区别在于 IP 地址是否改变。<br>不改变 IP 地址的网关，我们称为<strong>转发网关</strong>；改变IP 地址的网关，我们称为<strong>NAT 网关</strong>。</p>
+<h4 id="转发网关"><a href="#转发网关" class="headerlink" title="转发网关"></a>转发网关</h4><p><img src="images/gateway/gateway1.jpg" alt></p>
+<p>服务器 A 要访问服务器 B。首先，<code>192.168.4.101</code> 和 A 不在同一个网段的，需要先发给网关。那网关是谁呢？已经静态配置好了，<br>网关是 <code>192.168.1.1</code>。发送 ARP 获取网关的 MAC 地址，然后发送包。包的内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：服务器A 的MAC</span><br><span class="line">目标MAC：192.168.1.1 网关的MAC</span><br><span class="line">源IP：192.168.1.101</span><br><span class="line">目标IP：192.168.4.101</span><br></pre></td></tr></table></figure></p>
+<p>包到达 <code>192.168.1.1</code> 这个网口，发现 MAC 一致，将包收进来，开始思考往哪里转发。</p>
+<p>在路由器 A 中配置了静态路由之后，要想访问 <code>192.168.4.0/24</code>，要从 <code>192.168.56.1</code> 这个口出去，下一跳为 <code>192.168.56.2</code>。发送 ARP<br>获取 <code>192.168.56.2</code> 的 MAC 地址，然后发送包。包的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：192.168.56.1 的MAC 地址</span><br><span class="line">目标MAC：192.168.56.2 的MAC 地址</span><br><span class="line">源IP：192.168.1.101</span><br><span class="line">目标IP：192.168.4.101</span><br></pre></td></tr></table></figure></p>
+<p>包到达 <code>192.168.56.2</code> 这个网口，发现 MAC 一致，将包收进来，开始思考往哪里转发。</p>
+<p>路由器 B 中配置了静态路由，要想访问 <code>192.168.4.0/24</code>，要从 <code>192.168.4.1</code> 这个口出去，没有下一跳了。因为我右手这个网卡，就是这个网<br>段的，我是最后一跳了。发送 ARP 获取<code>192.168.4.101</code> 的 MAC 地址，然后发送包。包的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：192.168.4.1 的MAC 地址</span><br><span class="line">目标MAC：192.168.4.101 的MAC 地址</span><br><span class="line">源IP：192.168.1.101</span><br><span class="line">目标IP：192.168.4.101</span><br></pre></td></tr></table></figure></p>
+<p>包到达服务器 B，MAC 地址匹配，将包收进来。</p>
+<p>这个过程可以看出，<strong>每到一个新的局域网，MAC 都是要变的，但是 IP 地址都不变</strong>。在 IP 头里面，不会保存任何网关的 IP 地址。所谓的下一跳是，<br>某个 IP 要将这个 IP 地址转换为 MAC 放入 MAC 头。</p>
+<p>在这整个过程中，IP 头里面的地址都是不变的。IP 地址在三个局域网都可见，在三个局域网之间的网段都不会冲突。在三个网段之间传输包，IP 头不改变。</p>
+<h4 id="NAT-网关"><a href="#NAT-网关" class="headerlink" title="NAT 网关"></a>NAT 网关</h4><p><img src="images/gateway/gateway2.jpg" alt></p>
+<p>遇见的第一个问题是，局域网之间没有商量过，各定各的网段，因而 IP 段冲突了。最左面大唐的地址是 <code>192.168.1.101</code>，最右面印度的地址<br>也是 <code>192.168.1.101</code>，如果单从 IP 地址上看，简直是自己访问自己，其实是大唐的 <code>192.168.1.101</code> 要访问印度的 <code>192.168.1.101</code>。<br>怎么解决这个问题？既然局域网之间没有商量过，你们各管各的，那到国际上，也即中间的局域网里面，就需要使用另外的地址。就像出国，不能用咱们<br>自己的身份证，而要改用护照一样，玄奘西游也要拿着专门取经的通关文牒，而不能用自己国家的身份证。</p>
+<p>首先，目标服务器 B 在国际上要有一个国际的身份，我们给它一个 <code>192.168.56.2</code>。在网关 B 上记下来，国际身份 <code>192.168.56.2</code> 对应国内<br>身份 <code>192.168.1.101</code>。凡是要访问 <code>192.168.56.2</code>，都转成<code>192.168.1.101</code>。</p>
+<p>源服务器 A 要访问目标服务器 B，要指定的目标地址为 <code>192.168.56.2</code>。这是它的国际身份。<code>192.168.56.2</code> 和我不是一个网段的，因而需要<br>发给网关 <code>192.168.1.1</code>，发送 ARP 获取网关的 MAC 地址，然后发送包。包的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：服务器A 的MAC</span><br><span class="line">目标MAC：192.168.1.1 这个网口的MAC</span><br><span class="line">源IP：192.168.1.101</span><br><span class="line">目标IP：192.168.56.2</span><br></pre></td></tr></table></figure></p>
+<p>路由器 A 中配置了静态路由：要想访问 <code>192.168.56.2/24</code>，要从 <code>192.168.56.1</code> 这个口出去，没有下一跳了，因为我右手这个网卡，就是这个<br>网段的，我是最后一跳了。发送 ARP 获取 <code>192.168.56.2</code> 的 MAC 地址。</p>
+<p>当网络包发送到中间的局域网的时候，服务器 A 也需要有个国际身份，因而在国际上，源 IP 地址也不能用 <code>192.168.1.101</code>，需要改<br>成 <code>192.168.56.1</code>。发送包的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：192.168.56.1 的MAC 地址</span><br><span class="line">目标MAC：192.168.56.2 的MAC 地址</span><br><span class="line">源IP：192.168.56.1</span><br><span class="line">目标IP：192.168.56.2</span><br></pre></td></tr></table></figure></p>
+<p>路由器 B 是一个 NAT 网关，它上面配置了，要访问国际身份 <code>192.168.56.2</code> 对应国内身份 <code>192.168.1.101</code>，于是改为访问 <code>192.168.1.101</code>。</p>
+<p>路由器 B 中配置了静态路由：要想访问 <code>192.168.1.0/24</code>，要从 <code>192.168.1.1</code> 这个口出去，没有下一跳了，因为我右手这个网卡，就是这个网<br>段的，我是最后一跳了。发送 ARP 获取 <code>192.168.1.101</code>的 MAC 地址，然后发送包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">源MAC：192.168.1.1 的MAC 地址</span><br><span class="line">目标MAC：192.168.1.101 的MAC 地址</span><br><span class="line">源IP：192.168.56.1</span><br><span class="line">目标IP：192.168.1.101</span><br></pre></td></tr></table></figure></p>
+<p>服务器 B 接收的包可以看出，源 IP 为服务器 A 的国际身份，因而发送返回包的时候，也发给这个国际身份，由路由器 A 做 NAT，转换为国内身份。</p>
+<p>这个过程可以看出，IP 地址也会变。这个过程用英文说就是<strong>Network Address Translation</strong>，简称<strong>NAT</strong>。</p>
+<p>第二种方式我们经常见，现在大家每家都有家用路由器，家里的网段都是 <code>192.168.1.x</code>，所以你肯定访问不了你邻居家的这个私网的 IP 地址的。<br>所以，当我们家里的包发出去的时候，都被家用路由器 NAT 成为了运营商的地址了。</p>
+<h2 id="如何配置路由"><a href="#如何配置路由" class="headerlink" title="如何配置路由"></a>如何配置路由</h2><p>路由器就是一台网络设备，它有多张网卡。当一个入口的网络包送到路由器时，它会根据一个本地的转发信息库，来决定如何正确地转发流量。这个转<br>发信息库通常被称为<strong>路由表</strong>。</p>
+<p>一张路由表中会有多条路由规则。每一条规则至少包含这三项信息。</p>
+<ul>
+<li>目的网络：这个包想去哪儿？</li>
+<li>出口设备：将包从哪个口扔出去？</li>
+<li>下一跳网关：下一个路由器的地址。</li>
+</ul>
+<p><strong>根据目的 IP 地址来配置路由</strong>，通过 route 命令和 ip route 命令可以进行查询或配置。</p>
+<h3 id="配置策略路由"><a href="#配置策略路由" class="headerlink" title="配置策略路由"></a>配置策略路由</h3><p>除了可以根据目的 ip 地址配置路由外，还可以根据多个参数来配置路由，这就称为<strong>策略路由</strong>。</p>
+<p>可以配置多个路由表，可以根据源 IP 地址、入口设备、TOS 等选择路由表，然后在路由表中查找路由。这样可以使得来自不同来源的包走不同的路由。</p>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>上面的都是静态路由。但是网络环境复杂并且多变，使用动态路由路由器，可以根据路由协议算法生成动态路由表，随网络运行状况的变化而变化。</p>
+<p>可以想象唐僧西天取经，无论是一个国家内部，还是国家之间，我们都可以将复杂的路径，抽象为一种叫作图的数据结构。至于唐僧西行取经，肯定想走<br>得路越少越好，道路越短越好，因而这就转化成为<strong>如何在途中找到最短路径的问题</strong>。</p>
+<h3 id="距离矢量路由算法"><a href="#距离矢量路由算法" class="headerlink" title="距离矢量路由算法"></a>距离矢量路由算法</h3><p>基于 Bellman-Ford 算法，这种算法的基本思路是，每个路由器都保存一个路由表，包含多行，每行对应网络中的一个路由器，每一行包含两部分信息，<br>一个是要到目标路由器，从那条线出去，另一个是到目标路由器的距离。</p>
+<p>每个路由器都是知道全局信息的。信息如何更新？每个路由器都知道自己和邻居之间的距离，每过几秒，每个路由器都将自己所知的到达所有的路由<br>器的距离告知邻居，每个路由器也能从邻居那里得到相似的信息。</p>
+<p>每个路由器根据新收集的信息，计算和其他路由器的距离，比如自己的一个邻居距离目标路由器的距离是 M，而自己距离邻居是 x，则自己距离目标<br>路由器是 x+M。</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li><strong>好消息传得快，坏消息传得慢</strong>，如果有个路由器加入了这个网络，它的邻居就能很快发现它，然后将消息广播出去。要不了多久，整个网络就都知<br>道了。但是一旦一个路由器挂了，挂的消息是没有广播的。当每个路由器发现原来的道路到不了这个路由器的时候，感觉不到它已经挂了，而是试图通<br>过其他的路径访问，直到试过了所有的路径，才发现这个路由器是真的挂了。</li>
+<li><strong>每次发送的时候，要发送整个全局路由表</strong>，网络大了，谁也受不了。</li>
+</ol>
+<h3 id="链路状态路由算法"><a href="#链路状态路由算法" class="headerlink" title="链路状态路由算法"></a>链路状态路由算法</h3><p>基本思路是：当一个路由器启动的时候，首先是发现邻居，向邻居 say hello，邻居都回复。然后计算和邻居的距离，发送一个 echo，要求马上返回，<br>除以二就是距离。然后将自己和邻居之间的链路状态包广播出去，发送到整个网络的每个路由器。这样每个路由器都能够收到它和邻居之间的关系的信息。<br>因而，每个路由器都能在自己本地构建一个完整的图，然后针对这个图使用 Dijkstra 算法，找到两点之间的最短路径。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

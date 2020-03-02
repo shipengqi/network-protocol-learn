@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | P2P 协议 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"P2P 协议","path":"p2p.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="P2P-协议"><a href="#P2P-协议" class="headerlink" title="P2P 协议"></a>P2P 协议</h1><p>下载文件最简单的方式 HTTP，但是下载很慢，可以使用 FTP（文件传输协议）。</p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>FTP 采用两个TCP 连接来传输一个文件：</p>
+<ul>
+<li><strong>控制连接</strong>：服务器以被动的方式，打开众所周知用于 FTP 的端口 21，客户端则主动发起连接。该连接将命令从客户端传给服务器，并传回服<br>务器的应答。常用的命令有：<code>list</code> —— 获取文件目录；<code>reter</code> —— 取一个文件；<code>store</code> —— 存一个文件。</li>
+<li><strong>数据连接</strong>：每当一个文件在客户端与服务器之间传输时，就创建一个数据连接。</li>
+</ul>
+<h3 id="FTP-的两种模式"><a href="#FTP-的两种模式" class="headerlink" title="FTP 的两种模式"></a>FTP 的两种模式</h3><p>两种模式都是站在 FTP 服务器的角度来说的。</p>
+<h3 id="主动模式（PORT）"><a href="#主动模式（PORT）" class="headerlink" title="主动模式（PORT）"></a>主动模式（PORT）</h3><p>客户端随机打开一个大于 1024 的端口 N，向服务器的命令端口 21 发起连接，同时开放 N+1 端口监听，并向服务器发出 <code>port N+1</code> 命令，由服务<br>器从自己的数据端口 20，主动连接到客户端指定的数据端口 N+1。</p>
+<h3 id="被动模式（PASV）"><a href="#被动模式（PASV）" class="headerlink" title="被动模式（PASV）"></a>被动模式（PASV）</h3><p>当开启一个 FTP 连接时，客户端打开两个任意的本地端口 N（大于 1024）和 N+1。第一个端口连接服务器的 21 端口，提交 PASV 命令。然后，服<br>务器会开启一个任意的端口 P（大于 1024），返回 <code>227 entering passive mode</code> 消息，里面有 FTP 服务器开放的用来进行数据传输的端口。客<br>户端收到消息取得端口号之后，会通过 N+1 号端口连接服务器的端口 P，然后在两个端口之间进行数据传输。</p>
+<h2 id="P2P-是什么"><a href="#P2P-是什么" class="headerlink" title="P2P 是什么"></a>P2P 是什么</h2><p>无论是 HTTP 的方式，还是 FTP 的方式，都有一个比较大的缺点，就是难以解决单一服务器的带宽压力，因为它们使用的都是传统的客户端服务器的方式。</p>
+<p><strong>P2P 就是 peer-to-peer</strong>。资源开始并不集中地存储在某些设备上，而是分散地存储在多台设备上。这些设备我们称为 peer。</p>
+<p>想要下载一个文件的时候，你只要得到那些已经存在了文件的 peer，并和这些 peer 之间，建立点对点的连接，而不需要到中心服务器上，就可以<br>就近下载文件。一旦下载了文件，你也就成为 peer 中的一员，你旁边的那些机器，也可能会选择从你这里下载文件，所以当你使用 P2P 软件的时候，<br>例如 BitTorrent，往往能够看到，既有下载流量，也有上传的流量，也即你自己也加入了这个P2P 的网络，自己从别人那里下载，同时也提供给其他人<br>下载。可以想象，这种方式，参与的人越多，下载速度越快，一切完美。</p>
+<h3 id="种子（-torrent）文件"><a href="#种子（-torrent）文件" class="headerlink" title="种子（.torrent）文件"></a>种子（.torrent）文件</h3><p>怎么知道哪些 peer 有你要下载的文件？</p>
+<p>这就用到种子啦，也即咱们比较熟悉的 <code>.torrent</code> 文件。<code>.torrent</code> 文件由两部分组成，分别是：<strong>announce（tracker URL）和 文件信息</strong>。</p>
+<p>文件信息里面有这些内容:</p>
+<ul>
+<li><strong>info 区</strong>：这里指定的是该种子有几个文件、文件有多长、目录结构，以及目录和文件的名字。</li>
+<li><strong>Name 字段</strong>：指定顶层目录名字。</li>
+<li><strong>每个段的大小</strong>：BitTorrent（简称 BT）协议把一个文件分成很多个小段，然后分段下载。</li>
+<li><strong>段哈希值</strong>：将整个种子中，每个段的 SHA-1 哈希值拼在一起。</li>
+</ul>
+<p>下载时，BT 客户端首先解析 <code>.torrent</code> 文件，得到 tracker 地址，然后连接 tracker 服务器。tracker 服务器回应下载者的请求，将其他<br>下载者（包括发布者）的 IP 提供给下载者。下载者再连接其他下载者，根据 <code>.torrent</code> 文件，两者分别对方告知自己已经有的块，然后交换对方<br>没有的数据。此时不需要其他服务器参与，并分散了单个线路上的数据流量，因此减轻了服务器的负担。</p>
+<p>下载者每得到一个块，需要算出下载块的 Hash 验证码，并与 <code>.torrent</code> 文件中的对比。如果一样，则说明块正确，不一样则需要重新下载这个块。<br>这种规定是为了解决下载内容的准确性问题。</p>
+<p>这种方式特别依赖 tracker。tracker 需要收集下载者信息的服务器，并将此信息提供给其他下载者，使下载者们相互连接起来，传输数据。虽然<br>下载的过程是非中心化的，但是加入这个 P2P 网络的时候，都需要借助 tracker 中心服务器，这个服务器是用来登记有哪些用户在请求哪些资源。</p>
+<p>一旦 tracker 服务器出现故障或者线路遭到屏蔽，BT 工具就无法正常工作了。</p>
+<h2 id="去中心化网络（DHT）"><a href="#去中心化网络（DHT）" class="headerlink" title="去中心化网络（DHT）"></a>去中心化网络（DHT）</h2><p><strong>DHT（Distributed Hash Table）去中心化网络，每个加入这个 DHT 网络的人，都要负责存储这个网络里的资源信息和其他成员的联系信息，相当<br>于所有人一起构成了一个庞大的分布式存储数据库</strong>。</p>
+<p>有一种著名的 DHT 协议，叫 Kademlia 协议。这个和区块链的概念一样。</p>
+<p>任何一个 BitTorrent 启动之后，它都有两个角色。一个是 peer，监听一个 TCP 端口，用来上传和下载文件，这个角色表明，我这里有某个文件。<br>另一个角色 DHT node，监听一个 UDP 的端口，通过这个角色，这个节点加入了一个 DHT 的网络。</p>
+<p><img src="images/p2p/dht.jpg" alt></p>
+<p>在 DHT 网络里面，每一个 DHT node 都有一个 ID。这个 ID 是一个很长的串。每个 DHT node 都有责任掌握一些知识，也就是文件索引，也即<br>它应该知道某些文件是保存在哪些节点上。它只需要有这些知识就可以了，而它自己本身不一定就是保存这个文件的节点。</p>
+<h3 id="哈希值"><a href="#哈希值" class="headerlink" title="哈希值"></a>哈希值</h3><p>每个 DHT node 不会有全局的知识，也即不知道所有的文件保存在哪里，它只需要知道一部分。那应该知道哪一部分呢？这就需要用哈希<br>算法计算出来。</p>
+<p>每个文件可以计算出一个哈希值，而 <strong>DHT node 的 ID 是和哈希值相同长度的串</strong>。</p>
+<p>DHT 算法是这样规定的：<strong>如果一个文件计算出一个哈希值，则和这个哈希值一样的那个 DHT node，就有责任知道从哪里下载这个文件，即便它自己<br>没保存这个文件</strong>。</p>
+<p>当然不一定这么巧，总能找到和哈希值一模一样的，有可能一模一样的 DHT node 也下线了，所以 DHT 算法还规定：<strong>除了一模一样的<br>那个 DHT node 应该知道，ID 和这个哈希值非常接近的 N 个 DHT node 也应该知道</strong>。</p>
+<p>什么叫和哈希值接近呢？例如只修改了最后一位，就很接近；修改了倒数 2 位，也不远；修改了倒数 3 位，也可以接受。总之，凑齐了规定的 N 这个<br>数就行。</p>
+<p>刚才那个图里，文件 1 通过哈希运算，得到匹配 ID 的 DHT node 为 node C，当然还会有其他的，我这里没有画出来。所以，node C 有责任知道<br>文件 1 的存放地址，虽然 node C 本身没有存放文件 1。</p>
+<p>接下来一个新的节点 node new 上线了。如果想下载文件 1，它首先要加入 DHT 网络，如何加入呢？</p>
+<p>在这种模式下，种子 <code>.torrent</code> 文件里面就不再是 tracker 的地址了，而是一个 list 的 node 的地址，而所有这些 node 都是已经在 DHT 网络<br>里面的。当然随着时间的推移，很可能有退出的，有下线的，但是我们假设，不会所有的都联系不上，总有一个能联系上。</p>
+<p>node new 只要在种子里面找到一个 DHT node，就加入了网络。</p>
+<p>node new 会计算文件 1 的哈希值，并根据这个哈希值了解到，和这个哈希值匹配，或者很接近的 node 上知道如何下载这个文件，例如计算出来的哈<br>希值就是 node C。</p>
+<p>但是 node new 不知道怎么联系上 node C，因为种子里面的 node 列表里面很可能没有 node C，但是它可以问，DHT 网络特别像一个社交网<br>络，node new 只有去它能联系上的 node 问，你们知道不知道 node C 的联系方式呀？</p>
+<p>在 DHT 网络中，每个 node 都保存了一定的联系方式，但是肯定没有 node 的所有联系方式。DHT 网络中，节点之间通过互相通信，也会交流联<br>系方式，也会删除联系方式。和人们的方式一样，你有你的朋友圈，你的朋友有它的朋友圈，你们互相加微信，就互相认识了，过一段时间不联系，就删<br>除朋友关系。</p>
+<p>所以，node new 想联系 node C，就去万能的朋友圈去问，并且求转发，朋友再问朋友，很快就能找到。如果找不到 C，也能找到和 C 的 ID 很像的节<br>点，它们也知道如何下载文件 1。</p>
+<p>在 node C 上，告诉 node new，下载文件 1，要去 B、D、F，于是 node new 选择和 node B 进行 peer 连接，开始下载，它一旦开始下载，自己<br>本地也有文件 1 了，于是 node new 告诉 node C 以及和 node C 的 ID 很像的那些节点，我也有文件 1 了，可以加入那个文件拥有者列表了。</p>
+<p>但是你会发现 node new 上没有文件索引，但是根据哈希算法，一定会有某些文件的哈希值是和 node new 的 ID 匹配上的。在 DHT 网络中，会有<br>节点告诉它，你既然加入了咱们这个网络，你也有责任知道某些文件的下载地址。</p>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>

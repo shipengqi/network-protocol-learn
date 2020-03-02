@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    <title>Network protocol learning | 网络协议 </title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,600,700" rel="stylesheet">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/network-protocol-learn/style/doc.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="/network-protocol-learn/images/favicon.ico">
+
+    
+
+  </head>
+  <body>
+
+   <script>window.__INITIAL_STATE__ = {"page":{"title":"网络协议","path":"index.html"},"data":{"navigation":{"logo":{"text":"Network Protocol Learn","type":"link","path":"index.html"},"main":[{"text":"IP","type":"link","path":"ip.html"},{"text":"物理层和链路层","type":"link","path":"physical_link.html"},{"text":"ICMP","type":"link","path":"icmp.html"},{"text":"网关","type":"link","path":"gateway.html"},{"text":"UDP","type":"link","path":"udp.html"},{"text":"TCP","type":"link","path":"tcp.html"},{"text":"HTTP","type":"link","path":"http.html"},{"text":"HTTPS","type":"link","path":"https.html"},{"text":"流媒体协议","type":"link","path":"stream.html"},{"text":"P2P 协议","type":"link","path":"p2p.html"},{"text":"DNS","type":"link","path":"dns.html"},{"text":"CDN","type":"link","path":"cdn.html"},{"text":"数据中心","type":"link","path":"data_center.html"},{"text":"VPN","type":"link","path":"vpn.html"},{"text":"移动网络","type":"link","path":"nemo.html"},{"text":"云中网络","type":"link","path":"cloud.html"},{"text":"容器网络","type":"link","path":"container.html"},{"text":"RPC","type":"link","path":"rpc.html"},{"text":"网络工具","type":"label"},{"text":"网络工具","type":"link","path":"net_tools.html"},{"text":"WireShark","type":"link","path":"wireshark.html"},{"text":"THEME","type":"label"},{"text":"使用文档主题","type":"link","path":"theme/theme-usage.html"},{"text":"SUPPORT AND FEEDBACK","type":"label"},{"text":"Raise an Issue on Github","type":"link","path":"https://github.com/shipengqi/network-protocol-learn/issues/new"}]}},"config":{"timezone":"UTC","root":"/network-protocol-learn/","time_format":"HH:mm:ss","theme":"../node_modules/hexo-theme-doc","theme_config":{"swagger_ui":{"version":2,"permalinks":true,"api_explorer":true,"download":"Download specification","show_extensions":false,"deep_linking":true,"display_operation_id":false,"doc_expansion":"none"},"search":{"skip":false,"background":false,"route":"/lunr.json"},"favicon":"images/favicon.ico"}}}</script>
+
+    <div id="react-navigation-root"><div class="doc-navigation" data-reactroot><nav class="doc-navbar"><a href="/network-protocol-learn/index.html" class="doc-navbar__logo"><img src="/network-protocol-learn/images/logo.png" class="doc-navbar__logo__img"><span class="doc-navbar__logo__text">Network Protocol Learn</span></a><i class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><div class="doc-sidebar__search-form"></div><ul class="doc-sidebar-list"></ul></div></nav></div></div>
+    <div class="doc-content">
+  <div class="dc-page">
+    <div class="dc-card">
+      <div id="react-search-results-root"></div>
+      <div id="page-content" class="doc-formatting">
+        <h1 id="网络协议"><a href="#网络协议" class="headerlink" title="网络协议"></a>网络协议</h1><h2 id="什么是网络协议"><a href="#什么是网络协议" class="headerlink" title="什么是网络协议"></a>什么是网络协议</h2><p>网络协议可以理解为机器之间的语言。为什么这么说？</p>
+<p>比如计算机语言（如 C， Golang， Java），是人类与计算机之间沟通的协议，通过这种协议，计算机可以知道我们想让它做什么。但是这种协议计<br>算机不能直接读懂，对于计算机，它只认识 0 和 1，所以计算机语言还需要编译之后，计算机才会读懂。</p>
+<p>计算机语言，能够教给一台计算机完成你的工作，但是，要想一大片机器互相协作、共同完成一件事，只教给一台机器做什么是不够的，你需要学会<br>给一大片机器做什么。这就需要<strong>网络协议</strong>。</p>
+<p>互联网的每一层，都定义了很多协议。这些协议的总称，就叫做”互联网协议”（Internet Protocol Suite）。它们是互联网的核心，下面介绍每一层<br>的功能，主要就是介绍每一层的主要协议。</p>
+<p>每一层都是为了完成一种功能。为了实现这些功能，就需要大家都遵守共同的规则。<br>大家都遵守的规则，就叫做”协议”（protocol）。</p>
+<h2 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h2><h3 id="TCP-IP-模型"><a href="#TCP-IP-模型" class="headerlink" title="TCP/IP 模型"></a>TCP/IP 模型</h3><p>互联网的实现，分成好几层。每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。<br>用户接触到的，只是最上面的一层，根本没有感觉到下面的层。要理解互联网，必须从最下层开始，自下而上理解每一层的功能。<br>如何分层有不同的模型，有的模型分七层，有的分四层。把互联网分成五层，应该比较容易解释。</p>
+<ol>
+<li>应用层（Application Layer）</li>
+<li>传输层（Transport Layer）</li>
+<li>网络层（Network Layer）</li>
+<li>链接层（Link Layer）</li>
+<li>物理层（Physical Layer）</li>
+</ol>
+<p>越下面的层，越靠近硬件；越上面的层，越靠近用户。</p>
+<h3 id="TCP-IP-网络分层"><a href="#TCP-IP-网络分层" class="headerlink" title="TCP/IP 网络分层"></a>TCP/IP 网络分层</h3><p>平常所说的二层设备、三层设备，二层设备处理的通常是 MAC 层的东西。那如果发送一个 HTTP 的包，是在第七层工作的，需不需要经过二层设备？或者<br>即使经过了二层设备也不处理呢？</p>
+<p>程序是如何工作的？</p>
+<p><img src="images/tcpip/protocol-flow-example.jpg" alt></p>
+<p><strong>网络上跑的包，都是完整的。可以有下层没上层，绝对不可能有上层没下层</strong>。</p>
+<p>例如：TCP 在三次握手的时候，TCP 发送每一个消息，都会带着 IP 层和 MAC 层。因为，TCP 每发送一个消息，IP 层和 MAC 层的所有机制都<br>要运行一遍。而你只看到 TCP 三次握手了，其实，IP 层和 MAC 层为此也忙活好久了。</p>
+<p>所以，对 TCP 协议来说，三次握手也好，重试也好，只要想发出去包，就要有 IP 层和 MAC 层，不然是发不出去的。</p>
+<p>所谓的<strong>二层设备、三层设备</strong>，都是这些设备上跑的程序不同而已。一个 HTTP 协议的包经过一个二层设备，二层设备收进去的是整个网络包。<br>这里面 HTTP、TCP、IP、MAC 都有。什么叫二层设备呀，就是只把 MAC 头摘下来，看看到底是丢弃、转发，还是自己留着。那什么叫三层设备呢？<br>就是把 MAC 头摘下来之后，再把 IP 头摘下来，看看到底是丢弃、转发，还是自己留着。</p>
+<h2 id="网络分层的真实含义是什么？"><a href="#网络分层的真实含义是什么？" class="headerlink" title="网络分层的真实含义是什么？"></a>网络分层的真实含义是什么？</h2><p>分层的本质是通过分离关注点而让复杂问题简单化，通过分层可以做到：</p>
+<ul>
+<li>各层独立：限制了依赖关系的范围，各层之间使用标准化的接口，各层不需要知道上下层是如何工作的，增加或者修改一个应用层协议不会影<br>响传输层协议</li>
+<li>灵活性更好：比如路由器不需要应用层和传输层，分层以后路由器就可以只用加载更少的几个协议层</li>
+<li>易于测试和维护：提高了可测试性，可以独立的测试特定层，某一层有了更好的实现可以整体替换掉</li>
+<li>能促进标准化：每一层职责清楚，方便进行标准化</li>
+</ul>
+
+        <div id="react-support-footer-root"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+    
+
+    <!-- js vendors -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.0/lunr.min.js"></script>
+
+    <!-- js source  -->
+    <script src="/network-protocol-learn/script/doc.js"></script>
+
+    
+
+  </body>
+</html>
