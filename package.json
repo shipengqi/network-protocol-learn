@@ -2,7 +2,9 @@
   "name": "network-protocol-learn",
   "version": "1.0.0",
   "scripts": {
-    "start": "hexo s -p 8086"
+    "start": "hexo s -p 8086",
+    "start:debug": "hexo s -p 8083 --debug",
+    "deploy": "hexo clean && hexo d"
   },
   "repository": {
     "type": "git",
