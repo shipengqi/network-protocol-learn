@@ -5,10 +5,4 @@
 - TCP/IP 详解
 - [websocket](https://github.com/gorilla/websocket)
 - [socket.io source code](https://github.com/socketio/socket.io)
-- http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html
-- http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html
-- http://www.ruanyifeng.com/blog/2016/08/http.html
-- http://www.ruanyifeng.com/blog/2017/06/tcp-protocol.html
-- http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html
-- http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html
-- http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html
+- [gRPC 中文文档](http://doc.oschina.net/grpc?t=58010)
