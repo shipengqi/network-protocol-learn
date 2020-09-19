@@ -2,8 +2,6 @@
 title: ICMP
 ---
 
-# ICMP
-
 ICMP 全称 Internet Control Message Protocol，就是**互联网控制报文协议**。
 
 ICMP 报文是封装在IP 包里面的：
@@ -11,10 +9,12 @@ ICMP 报文是封装在IP 包里面的：
 ![](images/icmp/ping-pack.jpg)
 
 ICMP 报文有很多的类型，不同的类型有不同的代码。最常用的类型是主动请求为 8，主动请求的应答为 0。
+
 - 查询报文类型，如常用的 ping 就是查询报文，是一种主动请求，并且获得主动应答的 ICMP 协议。
 - 差错报文类型，异常情况发起的，对应 ICMP 的差错报文类型。例如，终点不可达为 3，源抑制为 4，超时为 11，重定向为 5。
 
 ## ping
+
 `ping` 是基于 ICMP 协议工作的。ping 的发送和接收过程：
 
 ![](images/icmp/ping-flow.jpg)
