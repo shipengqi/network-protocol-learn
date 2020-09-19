@@ -1,7 +1,6 @@
 ---
 title: SSH
 ---
-# SSH
 
 SSH （Secure Shell，安全外壳协议），用于计算机之间的加密登录。
 
@@ -9,9 +8,11 @@ SSH （Secure Shell，安全外壳协议），用于计算机之间的加密登�
 获这些口令和数据。
 
 ## 中间人攻击
+
 SSH之所以能够保证安全，原因在于它采用了公钥加密。
 
 整个过程是这样的：
+
 1. 远程主机收到用户的登录请求，把自己的公钥发给用户。
 2. 用户使用这个公钥，将登录密码加密后，发送回来。
 3. 远程主机用自己的私钥，解密登录密码，如果密码正确，就同意用户登录。
@@ -23,12 +24,14 @@ SSH之所以能够保证安全，原因在于它采用了公钥加密。
 这种风险就是的"中间人攻击"（Man-in-the-middle attack）。
 
 ## 口令登录
+
 如果你是第一次登录远程主机，系统会出现下面的提示：
+
 ```sh
 $ ssh user@host
 The authenticity of host '16.187.189.94 (16.187.189.94)' can't be established.
 ECDSA key fingerprint is MD5:b0:4f:bb:ef:80:aa:07:5f:08:f2:81:5f:5f:9d:73:4f.
-Are you sure you want to continue connecting (yes/no)?   
+Are you sure you want to continue connecting (yes/no)?
 ```
 
 这段话的意思是，无法确认 host 主机的真实性，只知道它的公钥指纹，是否继续？
@@ -38,16 +41,20 @@ Are you sure you want to continue connecting (yes/no)?
 用户怎么知道远程主机的公钥指纹应该是多少？并没有好办法，远程主机必须在自己的网站上贴出公钥指纹，以便用户自行核对。
 
 如果用户决定接受这个远程主机的公钥，输入 yes。系统会出现一句提示，然后，会要求输入密码。：
+
 ```sh
 Warning: Permanently added '16.187.189.94' (RSA) to the list of known hosts.
 Password: (enter password)
 ```
+
 密码正确，就可以登录了。
 
 ## 公钥登录
+
 使用密码登录，每次都必须输入密码，非常麻烦。可以通过公钥登录。
 
 **公钥登录**：
+
 1. 用户将自己的公钥储存在远程主机上。
 2. 登录的时候，远程主机会向用户发送一段随机字符串。
 3. 用户收到随机字符串，用自己的私钥加密后，再发给远程主机。
@@ -57,12 +64,14 @@ Password: (enter password)
 文件：`id_rsa.pub` 和 `id_rsa`。前者是公钥，后者是私钥。
 
 将公钥传送到远程主机上面：
+
 1. 查看是否存在 `$HOME/.ssh/authorized_keys` 文件，不存在则创建该文件：
 2. 将生成的 `id_rsa.pub` 文件内容粘贴到 `authorized_keys` 文件。
 
 然后再登录，就不需要输入密码了。
 
 如果还是不行，就打开远程主机的 `/etc/ssh/sshd_config` 这个文件，去掉如下三行注释#：
+
 ```sh
 #RSAAuthentication yes
 #PubkeyAuthentication yes
@@ -70,6 +79,7 @@ Password: (enter password)
 ```
 
 重启 sshd 服务：
+
 ```sh
 service sshd restart
 
