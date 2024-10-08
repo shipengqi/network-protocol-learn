@@ -1,0 +1,6 @@
+# Works with https://github.com/actions/labeler/
+# Below this line, the keys are labels to be applied, and the values are the file globs to match against.
+
+document:
+  - changed-files:
+      - any-glob-to-any-file: content/docs/*
