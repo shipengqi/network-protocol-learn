@@ -1,16 +1,27 @@
-# 网络协议 学习笔记
+# network-protocol-learn
 
-- GitHub 地址：https://github.com/shipengqi/network-protocol-learn
-- 在线浏览：https://www.shipengqi.top/network-protocol-learn
+Network protocol learning ...
 
 ## Usage
+
+Development:
+
 ```sh
-# install dependencies
-yarn
+# install hugo-book as git submodule
+git submodule add git@github.com:alex-shpak/hugo-book.git themes/book
 
-# start dev server, access http://localhost:8086/network-protocol-learn
-yarn start
-
-# deploy
-yarn deploy
+hugo server --minify --theme book
 ```
+
+Manually deploy:
+
+```sh
+./deploy.sh
+```
+
+> Any changes in the `content` directory will automatically trigger a deployment.
+
+## Menu
+
+By default, the [hugo-book](https://github.com/alex-shpak/hugo-book) theme will render pages from the `content/docs` section as a menu in a tree structure.
+You can set `title` and `weight` in the front matter of pages to adjust the order and titles in the menu.
